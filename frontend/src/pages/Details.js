@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "../axiosLib";
 
 const Details = () => {
@@ -14,11 +14,32 @@ const Details = () => {
     fetchBook();
   }, [id]);
   return (
-    <div>
-      <h1>{book.title}</h1>
-      <p>{book.isbn}</p>
-      <p>{book.body}</p>
-      <p>{book.category}</p>
+    <div className="px-3 sm:px-10">
+      <div className="py-4 mb-4 ">
+        <Link to="/">
+          <div className="text-2xl font-medium text-blue-400 hover:text-blue-600 inline">
+            Back to Home
+          </div>
+        </Link>
+      </div>
+      <div className="flex flex-col items-center justify-center">
+        <div className="text-2xl sm:text-6xl text-black-500 font-bold  sm:mb-4">
+          {book.title}
+        </div>
+        <div className="text-gray-500 sm:mb-2">
+          {book.author ? `Written by ${book.author.username}` : null}
+        </div>
+        <div className="text-gray-500 sm:mb-2">
+          {book.category ? `Category: ${book.category}` : null}
+        </div>
+        <div className="text-gray-500 sm:mb-2">
+          {book.isbn ? `ISBN: ${book.isbn}` : null}
+        </div>
+      </div>
+      <div className="text-gray-700 text-lg sm:mb-2 sm:text-xl md:text-2xl">
+        {" "}
+        {book.body}
+      </div>
     </div>
   );
 };

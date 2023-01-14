@@ -58,6 +58,8 @@ const SignUp = ({ setAuthType }) => {
             className="px-4 py-2 border-slate-500 border-2 rounded-md mb-5"
             type="text"
             id="username"
+            minLength={3}
+            maxLength={12}
             onChange={(e) =>
               setFormData({ ...formData, username: e.target.value })
             }

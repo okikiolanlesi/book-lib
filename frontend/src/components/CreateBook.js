@@ -6,6 +6,8 @@ const CreateBook = ({ close, openMyBooks }) => {
   const [categories, setCategories] = useState([]);
   const [buttonText, setButtonText] = useState("Create Book");
 
+  const [isbnValidation, setIsbnValidation] = useState({ valid: true });
+
   useEffect(() => {
     axios
       .get("/categories")
@@ -29,24 +31,26 @@ const CreateBook = ({ close, openMyBooks }) => {
     e.preventDefault();
 
     try {
-      setButtonText("Creating Book...");
-      console.log(formData);
-      await axios.post("/books", formData, {
-        withCredentials: true,
-      });
+      if (isbnValidation.valid) {
+        setButtonText("Creating Book...");
+        console.log(formData);
+        await axios.post("/books", formData, {
+          withCredentials: true,
+        });
 
-      setAlert({
-        showAlert: true,
-        type: "success",
-        message: "Book Created successfully",
-      });
-      setButtonText("Done");
-      setTimeout(() => {
-        window.location.reload();
-        // Not needed anymore
-        // close();
-        // openMyBooks();
-      }, 1500);
+        setAlert({
+          showAlert: true,
+          type: "success",
+          message: "Book Created successfully",
+        });
+        setButtonText("Done");
+        setTimeout(() => {
+          window.location.reload();
+          // Not needed anymore
+          // close();
+          // openMyBooks();
+        }, 1500);
+      }
     } catch (err) {
       console.log(err);
       setButtonText("Create Book");
@@ -75,7 +79,19 @@ const CreateBook = ({ close, openMyBooks }) => {
         ))}
       </select>
     ) : null;
-
+  const handleIsbn = (e) => {
+    const isbn = e.target.value;
+    console.log(isbn);
+    if (isbn.length < 13 && isbn.length > 9) {
+      setIsbnValidation((prev) => {
+        return { ...prev, valid: true };
+      });
+      console.log(isbnValidation);
+    } else {
+      setFormData({ ...formData, isbn });
+      setIsbnValidation({ valid: false });
+    }
+  };
   return (
     <div className=" overflow-y-scroll">
       {alert.showAlert && <Alert type={alert.type} message={alert.message} />}
@@ -99,6 +115,8 @@ const CreateBook = ({ close, openMyBooks }) => {
             className="px-4 py-2 border-slate-500 border-2 rounded-md mb-5"
             type="text"
             id="title"
+            minLength={3}
+            maxLength={50}
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
@@ -109,18 +127,24 @@ const CreateBook = ({ close, openMyBooks }) => {
             className="px-4 py-2 border-slate-500 border-2 rounded-md h-40 mb-5 min-h-max"
             type="text"
             id="body"
+            minLength={5}
             onChange={(e) => setFormData({ ...formData, body: e.target.value })}
             required
           />
           <label htmlFor="isbn">ISBN</label>
           <input
-            className="px-4 py-2 border-slate-500 border-2 rounded-md mb-5"
-            type="text"
+            className="px-4 py-2 border-slate-500 border-2 rounded-md "
+            type="number"
             id="isbn"
-            onChange={(e) => setFormData({ ...formData, isbn: e.target.value })}
+            onChange={(e) => handleIsbn(e)}
             required
           />
-          {categoriesInput}
+          {!isbnValidation.valid ? (
+            <div className="text-red-500 text-md mt-1 ">
+              ISBN must be a number with min length of 10 and max length of 13
+            </div>
+          ) : null}
+          <div className="mt-5">{categoriesInput}</div>
 
           <button
             className="transition ease-out duration-200 rounded-md bg-slate-600 text-white px-4 py-2 hover:bg-slate-700 hover:shadow-lg hover:cursor-pointer"
