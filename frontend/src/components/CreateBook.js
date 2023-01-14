@@ -4,6 +4,8 @@ import Alert from "./Alert";
 
 const CreateBook = ({ close, openMyBooks }) => {
   const [categories, setCategories] = useState([]);
+  const [buttonText, setButtonText] = useState("Create Book");
+
   useEffect(() => {
     axios
       .get("/categories")
@@ -27,6 +29,7 @@ const CreateBook = ({ close, openMyBooks }) => {
     e.preventDefault();
 
     try {
+      setButtonText("Creating Book...");
       console.log(formData);
       await axios.post("/books", formData, {
         withCredentials: true,
@@ -37,7 +40,7 @@ const CreateBook = ({ close, openMyBooks }) => {
         type: "success",
         message: "Book Created successfully",
       });
-
+      setButtonText("Done");
       setTimeout(() => {
         window.location.reload();
         // Not needed anymore
@@ -46,6 +49,7 @@ const CreateBook = ({ close, openMyBooks }) => {
       }, 1500);
     } catch (err) {
       console.log(err);
+      setButtonText("Create Book");
       setAlert({
         showAlert: true,
         type: "error",
@@ -122,7 +126,7 @@ const CreateBook = ({ close, openMyBooks }) => {
             className="transition ease-out duration-200 rounded-md bg-slate-600 text-white px-4 py-2 hover:bg-slate-700 hover:shadow-lg hover:cursor-pointer"
             type="submit"
           >
-            Create Book
+            {buttonText}
           </button>
         </form>
       </div>

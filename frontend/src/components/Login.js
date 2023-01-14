@@ -9,10 +9,12 @@ const Login = ({ setAuthType }) => {
     type: "",
     message: "",
   });
+  const [buttonText, setButtonText] = useState("Submit");
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
+      setButtonText("Loading...");
       const res = await axios.post("/users/login", formData, {
         withCredentials: true,
       });
@@ -22,11 +24,13 @@ const Login = ({ setAuthType }) => {
         type: "success",
         message: "Login successful",
       });
+      setButtonText("Signed in");
       setTimeout(() => {
         window.location.href = "/";
       }, 1500);
     } catch (err) {
       console.log(err);
+      setButtonText("Submit");
       setAlert({
         showAlert: true,
         type: "error",
@@ -66,7 +70,7 @@ const Login = ({ setAuthType }) => {
             className="transition ease-out duration-200 rounded-md bg-slate-600 text-white px-4 py-2 hover:bg-slate-700 hover:shadow-lg hover:cursor-pointer"
             type="submit"
           >
-            Submit
+            {buttonText}
           </button>
         </form>
         <div className="flex space-x-2">

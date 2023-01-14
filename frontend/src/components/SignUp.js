@@ -13,15 +13,19 @@ const SignUp = ({ setAuthType }) => {
     type: "",
     message: "",
   });
+  const [buttonText, setButtonText] = useState("Submit");
+
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
+      setButtonText("Loading...");
+
       const res = await axios.post("/users/signup", formData, {
         withCredentials: true,
       });
       await localStorage.setItem("user", JSON.stringify(res.data.data.user));
-
+      setButtonText("Registered");
       setAlert({
         showAlert: true,
         type: "success",
@@ -32,6 +36,7 @@ const SignUp = ({ setAuthType }) => {
       }, 1500);
     } catch (err) {
       console.log(err);
+      setButtonText("Submit");
       setAlert({
         showAlert: true,
         type: "error",
@@ -83,7 +88,7 @@ const SignUp = ({ setAuthType }) => {
             className="transition ease-out duration-200 rounded-md bg-slate-600 text-white px-4 py-2 hover:bg-slate-700 hover:shadow-lg hover:cursor-pointer"
             type="submit"
           >
-            Submit
+            {buttonText}
           </button>
         </form>
         <div className="flex space-x-2">

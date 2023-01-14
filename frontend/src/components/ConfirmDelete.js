@@ -3,7 +3,9 @@ import React from "react";
 const ConfirmDelete = (props) => {
   const handleDelete = async () => {
     await props.delete();
-    props.cancel();
+    setTimeout(() => {
+      props.cancel();
+    }, 2000);
   };
   return (
     <div>
@@ -25,7 +27,7 @@ const ConfirmDelete = (props) => {
             className="px-3 py-2 bg-red-300 hover:bg-red-600 hover:text-white rounded-lg hover:shadow-lg text-lg transition ease-out duration-200"
             onClick={handleDelete}
           >
-            Delete
+            {props.deleteText}
           </button>
           <button
             className="px-3 py-2 bg-gray-300 hover:bg-gray-600 hover:text-white rounded-lg hover:shadow-lg text-lg transition ease-out duration-200"

@@ -13,7 +13,10 @@ const Home = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       const res = await axios.get(
-        `${bookList === "all" ? "/books" : "/books/mybooks"}`
+        `${bookList === "all" ? "/books" : "/books/mybooks"}`,
+        {
+          withCredentials: true,
+        }
       );
       setBooks(res.data.data.books);
     };
@@ -25,16 +28,18 @@ const Home = () => {
     if (localUser) {
       setUser(localUser);
     } else {
-      window.location.href = "/auth";
+      // window.location.href = "/auth";
     }
   }, []);
-
+  const fakeUser = {
+    id: 1,
+  };
   // const [user, setUser] = useState(null);
   const booksMap = books.map((book) => {
     return (
       <BookCard
         key={book.id}
-        user={user}
+        user={user ? user : fakeUser}
         book={book}
         openMyBooks={() => setBookList("my")}
       />
@@ -53,22 +58,33 @@ const Home = () => {
           >
             All Books
           </h2>
-          <h2
-            className={`${
-              bookList === "my" ? "border-b-4 border-blue-800" : null
-            } cursor-pointer h-10`}
-            onClick={() => setBookList("my")}
-          >
-            My Books
-          </h2>
+          {user ? (
+            <h2
+              className={`${
+                bookList === "my" ? "border-b-4 border-blue-800" : null
+              } cursor-pointer h-10`}
+              onClick={() => setBookList("my")}
+            >
+              My Books
+            </h2>
+          ) : null}
         </div>
         <div>
-          <div
-            className="cursor-pointer mb-4 sm:mb-0 px-6 py-4 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
-            onClick={() => setCreateBook(true)}
-          >
-            Create New Book
-          </div>
+          {user ? (
+            <div
+              className="cursor-pointer mb-4 sm:mb-0 px-6 py-4 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
+              onClick={() => setCreateBook(true)}
+            >
+              Create New Book
+            </div>
+          ) : (
+            <div
+              className="cursor-pointer mb-4 sm:mb-0 px-6 py-4 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
+              onClick={() => (window.location.href = "/auth")}
+            >
+              Sign In
+            </div>
+          )}
         </div>
       </div>
       {createBook && (

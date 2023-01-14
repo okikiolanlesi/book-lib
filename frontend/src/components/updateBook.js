@@ -10,6 +10,8 @@ const UpdateBook = ({ close, openMyBooks, book }) => {
     isbn: book.isbn,
     category: book.category,
   });
+  const [buttonText, setButtonText] = useState("Update Book");
+
   useEffect(() => {
     axios
       .get("/categories")
@@ -25,6 +27,7 @@ const UpdateBook = ({ close, openMyBooks, book }) => {
     e.preventDefault();
 
     try {
+      setButtonText("Updating Book...");
       await axios.patch(`/books/${book._id}`, formData, {
         withCredentials: true,
       });
@@ -33,6 +36,7 @@ const UpdateBook = ({ close, openMyBooks, book }) => {
         type: "success",
         message: "Book Updated successfully",
       });
+      setButtonText("Done");
       setTimeout(() => {
         window.location.reload();
         // Not needed anymore
@@ -41,6 +45,7 @@ const UpdateBook = ({ close, openMyBooks, book }) => {
       }, 1500);
     } catch (err) {
       console.log(err);
+      setButtonText("Update Book");
       setAlert({
         showAlert: true,
         type: "error",
@@ -123,7 +128,7 @@ const UpdateBook = ({ close, openMyBooks, book }) => {
             className="transition ease-out duration-200 rounded-md bg-slate-600 text-white px-4 py-2 hover:bg-slate-700 hover:shadow-lg hover:cursor-pointer"
             type="submit"
           >
-            Update Book
+            {buttonText}
           </button>
         </form>
       </div>

@@ -7,6 +7,7 @@ import ConfirmDelete from "./ConfirmDelete";
 
 const BookCard = ({ book, user, openMyBooks }) => {
   const [showUpdateBook, setShowUpdateBook] = useState(false);
+  const [deleteText, setDeleteText] = useState("Delete");
   const [alert, setAlert] = useState({
     showAlert: false,
     type: "",
@@ -16,9 +17,11 @@ const BookCard = ({ book, user, openMyBooks }) => {
 
   const deleteBook = async () => {
     try {
+      setDeleteText("Deleting...");
       await axios.delete(`/books/${book.id}`, {
         withCredentials: true,
       });
+      setDeleteText("Deleted");
       setAlert({
         showAlert: true,
         type: "success",
@@ -26,10 +29,11 @@ const BookCard = ({ book, user, openMyBooks }) => {
       });
       await setTimeout(() => {
         setAlert({ showAlert: false, type: "", message: "" });
-      }, 1500);
+      }, 2000);
       window.location.reload();
     } catch (err) {
       console.log(err);
+      setDeleteText("Delete");
       setAlert({
         showAlert: true,
         type: "error",
@@ -54,18 +58,26 @@ const BookCard = ({ book, user, openMyBooks }) => {
         <ConfirmDelete
           cancel={() => setShowConfirmDelete(false)}
           delete={deleteBook}
+          deleteText={deleteText}
         />
       )}
       <div className="p-5 py-7 border-2 border-gray-100 rounded-2xl shadow-md hover:shadow-lg transition ease-in-out duration-200">
         <div className="flex justify-between">
           <div>
             <Link className="cursor-pointer" to={`/book/${book.id}`}>
-              <div className="text-4xl mb-4 transition ease-out duration-500 hover:underline truncate w-40 sm:w-[30rem]">
+              <div className=" text-2xl sm:text-4xl  mb-4 transition ease-out duration-500 hover:underline truncate w-40 sm:w-[30rem]">
                 {book.title}
               </div>
             </Link>
             <div className="text-xl text-gray-600 mb-2 truncate w-40 sm:w-[30rem]">
-              By <span className="italic">{book.author.username}</span>
+              By{" "}
+              <span className="italic">
+                {user.id === book.author.id ? (
+                  <span className=" font-medium">You</span>
+                ) : (
+                  book.author.username
+                )}
+              </span>
             </div>
             <div className="text-xl text-gray-600 italic mb-2 truncate w-40 sm:w-[30rem]">
               Genre: <span className="italic">{book.category}</span>
