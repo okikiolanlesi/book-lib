@@ -18,7 +18,7 @@ axiosLib.interceptors.response.use(
       // Access Token was expired
       if (err.response.status === 401 && !originalConfig._retry) {
         originalConfig._retry = true;
-
+        localStorage.clear();
         window.location.href = "/auth";
       }
     }
