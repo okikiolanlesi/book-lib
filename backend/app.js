@@ -17,7 +17,10 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://book-lib-frontend.onrender.com/",
     credentials: true,
   })
 );
