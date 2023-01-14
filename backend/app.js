@@ -20,7 +20,7 @@ app.use(
     origin:
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
-        : "https://book-lib-frontend.onrender.com/",
+        : "https://book-lib-frontend.onrender.com",
     credentials: true,
   })
 );
