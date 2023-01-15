@@ -165,18 +165,18 @@ const Home = () => {
           <div className="flex justify-center items-center space-x-4">
             {page > 1 && (
               <div
-                className="cursor-pointer  px-4 py-2 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
+                className="cursor-pointer  px-2 py-1 text-sm sm:text-lg sm:px-4 sm:py-2 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
                 onClick={() => setPage(page - 1)}
               >
                 Previous
               </div>
             )}
-            <div className="text-xl sm:text-2xl ">
+            <div className="text-sm sm:text-xl  ">
               Page {page} of {Math.ceil(totalBooks / 10)}
             </div>
             {page < totalBooks / 10 && (
               <div
-                className="cursor-pointer  px-4 py-2 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
+                className="cursor-pointer px-2 py-1 text-sm sm:text-lg sm:px-4 sm:py-2 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
                 onClick={() => setPage(page + 1)}
               >
                 Next
