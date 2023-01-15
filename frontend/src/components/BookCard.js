@@ -37,7 +37,7 @@ const BookCard = ({ book, user, openMyBooks }) => {
       setAlert({
         showAlert: true,
         type: "error",
-        message: "Something went wrong",
+        message: err.response.data.message,
       });
       await setTimeout(() => {
         setAlert({ showAlert: false, type: "", message: "" });
