@@ -15,19 +15,27 @@ const Home = () => {
     type: "",
     message: "",
   });
+  const [totalBooks, setTotalBooks] = useState(0);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const fetchBooks = async () => {
       const res = await axios.get(
-        `${bookList === "all" ? "/books" : "/books/mybooks"}`,
+        `${
+          bookList === "all"
+            ? `/books?page=${page}&limit=10`
+            : `/books/mybooks?page=${page}&limit=10`
+        }`,
         {
           withCredentials: true,
         }
       );
       setBooks(res.data.data.books);
+      setTotalBooks(parseInt(res.data.data.totalBooks));
+      console.log(res.data.data);
     };
     fetchBooks();
-  }, [bookList]);
+  }, [bookList, page]);
 
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem("user"));
@@ -145,6 +153,29 @@ const Home = () => {
           booksMap
         ) : (
           <h1 className=" text-4xl text-gray-700 font-semibold">No Books</h1>
+        )}
+      </div>
+      <div className="mb-8">
+        {totalBooks > 0 && (
+          <div className="flex justify-center items-center space-x-4">
+            {page > 1 && (
+              <div
+                className="cursor-pointer  px-4 py-2 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
+                onClick={() => setPage(page - 1)}
+              >
+                Previous
+              </div>
+            )}
+            <div className="text-xl sm:text-2xl ">{page}</div>
+            {page < totalBooks / 10 && (
+              <div
+                className="cursor-pointer  px-4 py-2 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
+                onClick={() => setPage(page + 1)}
+              >
+                Next
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>

@@ -11,6 +11,7 @@ exports.getAllBooks = catchAsync(async (req, res, next) => {
     .paginate();
   const books = await features.query;
   const booksCount = await Book.countDocuments();
+  console.log(booksCount);
   res.status(200).json({
     status: "success",
     results: books.length,
@@ -87,7 +88,15 @@ exports.deleteBook = catchAsync(async (req, res, next) => {
 });
 
 exports.getMyBooks = catchAsync(async (req, res, next) => {
-  const books = await Book.find({ author: req.user.id });
+  const features = new ApiFeatures(
+    Book.find({ author: req.user.id }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const books = await features.query;
   const booksCount = await Book.countDocuments({ author: req.user.id });
   res.status(200).json({
     status: "success",
