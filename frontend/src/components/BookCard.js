@@ -61,15 +61,15 @@ const BookCard = ({ book, user, openMyBooks }) => {
           deleteText={deleteText}
         />
       )}
-      <div className="p-5 py-7 border-2 border-gray-100 rounded-2xl shadow-md hover:shadow-lg transition ease-in-out duration-200">
+      <div className="px-3 py-5 sm:px-5 border-2 border-gray-100 rounded-2xl shadow-md hover:shadow-lg transition ease-in-out duration-200">
         <div className="flex justify-between">
           <div>
             <Link className="cursor-pointer" to={`/book/${book.id}`}>
-              <div className=" text-2xl sm:text-4xl  mb-4 transition ease-out duration-500 hover:underline truncate w-40 sm:w-[30rem]">
+              <div className=" text-lg sm:text-xl  mb-4 transition ease-out duration-500 hover:underline truncate w-28 sm:w-[30rem]">
                 {book.title}
               </div>
             </Link>
-            <div className="text-xl text-gray-600 mb-2 truncate w-40 sm:w-[30rem]">
+            <div className="text-md sm:text-lg text-gray-600 mb-2 truncate w-28 sm:w-[30rem]">
               By{" "}
               <span className="italic">
                 {user.id === book.author.id ? (
@@ -79,10 +79,10 @@ const BookCard = ({ book, user, openMyBooks }) => {
                 )}
               </span>
             </div>
-            <div className="text-xl text-gray-600 italic mb-2 truncate w-40 sm:w-[30rem]">
+            <div className="text-md sm:text-lg text-gray-600 italic mb-2 truncate w-40 sm:w-[30rem]">
               Genre: <span className="italic">{book.category}</span>
             </div>
-            <div className="text-lg text-gray-400 italic truncate w-40 sm:w-[30rem]">
+            <div className="text-md sm:text-lg text-gray-400 italic truncate w-40 sm:w-[30rem]">
               {book.isbn}
             </div>
           </div>
@@ -90,7 +90,7 @@ const BookCard = ({ book, user, openMyBooks }) => {
             <div>
               <svg
                 onClick={() => setShowUpdateBook(true)}
-                className="w-8 h-8 text-gray-500 hover:text-gray-700 mb-4 cursor-pointer"
+                className="w-6 h-6 text-gray-500 hover:text-gray-700 mb-4 cursor-pointer"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -105,7 +105,7 @@ const BookCard = ({ book, user, openMyBooks }) => {
               </svg>
               <svg
                 onClick={() => setShowConfirmDelete(true)}
-                className="w-8 h-8 text-gray-500 hover:text-gray-700 mb-4 cursor-pointer"
+                className="w-6 h-6 text-gray-500 hover:text-gray-700 mb-4 cursor-pointer"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"

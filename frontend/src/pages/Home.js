@@ -32,7 +32,6 @@ const Home = () => {
       );
       setBooks(res.data.data.books);
       setTotalBooks(parseInt(res.data.data.totalBooks));
-      console.log(res.data.data);
     };
     fetchBooks();
   }, [bookList, page]);
@@ -101,7 +100,10 @@ const Home = () => {
             className={`${
               bookList === "all" ? "border-b-4 border-blue-800" : null
             } cursor-pointer h-10`}
-            onClick={() => setBookList("all")}
+            onClick={() => {
+              setBookList("all");
+              setPage(1);
+            }}
           >
             All Books
           </h2>
@@ -110,7 +112,10 @@ const Home = () => {
               className={`${
                 bookList === "my" ? "border-b-4 border-blue-800" : null
               } cursor-pointer h-10`}
-              onClick={() => setBookList("my")}
+              onClick={() => {
+                setBookList("my");
+                setPage(1);
+              }}
             >
               My Books
             </h2>
@@ -120,13 +125,13 @@ const Home = () => {
           {user ? (
             <div className="flex space-x-2">
               <div
-                className="cursor-pointer mb-4 sm:mb-0 px-6 py-4 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
+                className="cursor-pointer mb-4 sm:mb-0 text-sm sm:text-md sm:px-4 px-3 py-3 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
                 onClick={() => setCreateBook(true)}
               >
                 Create New Book
               </div>
               <div
-                className="cursor-pointer mb-4 sm:mb-0 px-6 py-4 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
+                className="cursor-pointer mb-4 sm:mb-0 text-sm sm:text-md sm:px-4 px-3 py-3 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"
                 onClick={logout}
               >
                 Log Out
@@ -148,7 +153,7 @@ const Home = () => {
           openMyBooks={() => setBookList("my")}
         />
       )}
-      <div className="my-8 mx-10">
+      <div className="my-4 sm:my-8 mx-2 sm:mx-10 ">
         {books.length > 0 ? (
           booksMap
         ) : (
@@ -166,7 +171,9 @@ const Home = () => {
                 Previous
               </div>
             )}
-            <div className="text-xl sm:text-2xl ">{page}</div>
+            <div className="text-xl sm:text-2xl ">
+              Page {page} of {Math.ceil(totalBooks / 10)}
+            </div>
             {page < totalBooks / 10 && (
               <div
                 className="cursor-pointer  px-4 py-2 border-2 transition ease-in-out duration-200 text-blue-800 hover:bg-blue-800 hover:text-white border-blue-800 rounded-md"

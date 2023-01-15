@@ -63,7 +63,7 @@ const UpdateBook = ({ close, openMyBooks, book }) => {
   const categoriesInput =
     categories.length > 0 ? (
       <select
-        className="px-4 py-2 border-slate-500 border-2 rounded-md mb-5"
+        className="px-2 py-1 border-slate-300 border rounded-md mb-5"
         value={book.category}
         onChange={(e) => {
           return { ...formData, category: e.target.value };
@@ -100,19 +100,21 @@ const UpdateBook = ({ close, openMyBooks, book }) => {
         className="fixed z-10 top-0 left-0 bottom-0 right-0 bg-black bg-opacity-30"
       ></div>
 
-      <div className=" max-w-screen-lg flex flex-col border-1 border-blue-200 bg-white p-10 rounded-lg w-screen z-20 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
+      <div className="max-w-screen-sm flex flex-col bg-white px-4 py-5 sm:px-10  rounded-lg w-screen z-20 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
         <div className="flex justify-end">
           <button className="text-gray-700 text-2xl" onClick={close}>
             X
           </button>
         </div>
         <div className="flex justify-center">
-          <h2 className="text-2xl font-medium">Update {book.title}</h2>
+          <h2 className="text-lg sm:text-xl text-center font-medium">
+            Update "{book.title}"
+          </h2>
         </div>
         <form className="flex flex-col w-full mb-6" onSubmit={handleSubmit}>
           <label htmlFor="title">Title</label>
           <input
-            className="px-4 py-2 border-slate-500 border-2 rounded-md mb-5"
+            className="px-2 py-1 border-slate-300 border rounded-md mb-5"
             type="text"
             id="title"
             minLength={3}
@@ -125,7 +127,7 @@ const UpdateBook = ({ close, openMyBooks, book }) => {
           />
           <label htmlFor="body">Body</label>
           <textarea
-            className="px-4 py-2 border-slate-500 border-2 rounded-md h-40 mb-5 min-h-max"
+            className="px-2 py-1 border-slate-300 border rounded-md h-40 mb-5 min-h-max"
             type="text"
             id="body"
             value={formData.body}
@@ -134,7 +136,7 @@ const UpdateBook = ({ close, openMyBooks, book }) => {
           />
           <label htmlFor="isbn">ISBN</label>
           <input
-            className="px-4 py-2 border-slate-500 border-2 rounded-md"
+            className="px-2 py-1 border-slate-300 border rounded-md"
             type="number"
             id="isbn"
             minLength={5}
@@ -143,7 +145,7 @@ const UpdateBook = ({ close, openMyBooks, book }) => {
             required
           />
           {!isbnValidation.valid ? (
-            <div className="text-red-500 text-md mt-1 ">
+            <div className="text-red-500 text-xs sm:text-sm mt-1 ">
               ISBN must be a number with min length of 10 and max length of 13
             </div>
           ) : null}

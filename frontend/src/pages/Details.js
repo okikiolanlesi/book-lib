@@ -36,7 +36,7 @@ const Details = () => {
           {book.isbn ? `ISBN: ${book.isbn}` : null}
         </div>
       </div>
-      <div className="text-gray-700 text-lg sm:mb-2 sm:text-xl md:text-2xl">
+      <div className="text-gray-700 mt-5 text-lg sm:mb-2 sm:text-xl md:text-2xl">
         {" "}
         {book.body}
       </div>
