@@ -10,12 +10,13 @@ exports.getAllBooks = catchAsync(async (req, res, next) => {
     .limitFields()
     .paginate();
   const books = await features.query;
-
+  const booksCount = await Book.countDocuments();
   res.status(200).json({
     status: "success",
     results: books.length,
     data: {
       books,
+      totalBooks: booksCount,
     },
   });
 });
@@ -87,11 +88,13 @@ exports.deleteBook = catchAsync(async (req, res, next) => {
 
 exports.getMyBooks = catchAsync(async (req, res, next) => {
   const books = await Book.find({ author: req.user.id });
+  const booksCount = await Book.countDocuments({ author: req.user.id });
   res.status(200).json({
     status: "success",
     results: books.length,
     data: {
       books,
+      totalBooks: booksCount,
     },
   });
 });

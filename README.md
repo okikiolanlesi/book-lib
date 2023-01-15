@@ -18,7 +18,7 @@ An API library where users can store, read and receive books
 - If you're running the backend locally, change base url in axiosLib.js file to http://localhost:<BACKEND_PORT>
 - - run `npm  start` to start frontend server, this should open up the app in your browser
 
-### Live link for the frontend can be found [here]()
-### Live link for the backend can be found [here]()
+### Live link for the frontend can be found [here](https://book-lib-frontend.onrender.com/auth)
+### Live link for the backend can be found [here](https://book-lib-api-backend.onrender.com/api/v1/books)
 
 ### Link to postman documentation can be found [here]()
