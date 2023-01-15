@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosLib = axios.create({
-  // baseURL: "https://book-lib-api-backend.onrender.com/api/v1", // for production
-  baseURL: "http://localhost:8000/api/v1", // for local development
+  baseURL: "https://book-lib-api-backend.onrender.com/api/v1", // for production
+  // baseURL: "http://localhost:8000/api/v1", // for local development
   headers: {
     "Content-Type": "application/json",
   },
